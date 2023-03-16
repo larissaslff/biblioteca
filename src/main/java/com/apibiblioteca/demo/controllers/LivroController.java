@@ -1,6 +1,7 @@
 package com.apibiblioteca.demo.controllers;
 
 import com.apibiblioteca.demo.domain.Livro;
+import com.apibiblioteca.demo.service.LivroService;
 import com.apibiblioteca.demo.service.LivroServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import java.util.Optional;
 public class LivroController {
 
     @Autowired
-    private LivroServiceImpl service;
+    private LivroService service;
 
     @PostMapping
     public ResponseEntity<Livro> cadastrarLivro(@RequestBody Livro liv, UriComponentsBuilder uriBuilder){

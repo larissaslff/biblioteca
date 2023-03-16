@@ -1,6 +1,7 @@
 package com.apibiblioteca.demo.service;
 
 import com.apibiblioteca.demo.domain.Livro;
+import com.apibiblioteca.demo.exceptions.LivroNaoCadastradoException;
 import com.apibiblioteca.demo.repositories.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,33 +10,36 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class LivroServiceImpl {
+public class LivroServiceImpl implements LivroService {
 
     @Autowired
     LivroRepository repository;
 
+    @Override
     public Livro cadastrar(Livro livro) {
         return repository.save(livro);
     }
 
+    @Override
     public List<Livro> bucarTodosOsLivros(){
         return repository.findAll();
     }
 
+    @Override
     public Optional<Livro> buscarPorId(Long id) {
-        return Optional.of(repository.findById(id).orElseThrow());
-    }
-
-    public Livro atualizarLivro(Long id, Livro livro) {
-        Optional<Livro> livroJaCadastrado = buscarPorId(id);
-        if(livroJaCadastrado.isPresent()){
-            livro.setId(id);
-            cadastrar(livro);
+        Optional<Livro> livro = repository.findById(id);
+        if(livro.isPresent()){
             return livro;
         }
-        throw new RuntimeException();
+        throw new LivroNaoCadastradoException("Livro não cadastrado!") ;
     }
-
+    @Override
+    public Livro atualizarLivro(Long id, Livro livro) {
+        buscarPorId(id);
+        livro.setId(id);
+        return cadastrar(livro);
+    }
+    @Override
     public void deletarLivro(Long id) {
         repository.deleteById(id);
     }
