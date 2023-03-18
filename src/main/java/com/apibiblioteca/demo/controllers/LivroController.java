@@ -2,7 +2,6 @@ package com.apibiblioteca.demo.controllers;
 
 import com.apibiblioteca.demo.domain.Livro;
 import com.apibiblioteca.demo.service.LivroService;
-import com.apibiblioteca.demo.service.LivroServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

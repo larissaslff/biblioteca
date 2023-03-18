@@ -15,5 +15,7 @@ public interface AutorService {
     public Autor cadastrar(Autor autor);
     public Optional<Autor> buscarPorId(Long id);
     public Autor atualizarAutor(Long id, Autor autor);
+
     public void deletarAutor(Long id);
+    Autor cadastrarLivronoAutor(Long idAutor, Long idLivro);
 }

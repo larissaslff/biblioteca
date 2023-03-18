@@ -48,4 +48,11 @@ public class AutorController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping(value = "/{id_autor}/livros/{id_livro}")
+    public ResponseEntity<Autor> associarLivroAAutor(@PathVariable Long id_autor,
+                                                     @PathVariable Long id_livro){
+        return ResponseEntity.ok().body(service.cadastrarLivronoAutor(id_autor, id_livro));
+    }
+
+
 }

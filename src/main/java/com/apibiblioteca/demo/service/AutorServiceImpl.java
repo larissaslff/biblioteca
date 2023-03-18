@@ -8,14 +8,19 @@ import com.apibiblioteca.demo.repositories.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class AutorServiceImpl implements AutorService {
 
     @Autowired
     AutorRepository repository;
+
+    @Autowired
+    LivroRepository livroRepository;
 
     @Override
     public Autor cadastrar(Autor autor) {
@@ -37,12 +42,25 @@ public class AutorServiceImpl implements AutorService {
     }
     @Override
     public Autor atualizarAutor(Long id, Autor autor) {
+
         buscarPorId(id);
         autor.setId(id);
         return cadastrar(autor);
     }
+
     @Override
     public void deletarAutor(Long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public Autor cadastrarLivronoAutor(Long idAutor, Long idLivro) {
+        Set<Livro> livroSet = null;
+        Autor autor = repository.findById(idAutor).get();
+        Livro livro = livroRepository.findById(idLivro).get();
+        livroSet = autor.getLivros();
+        livroSet.add(livro);
+        autor.setLivros(livroSet);
+        return repository.save(autor);
     }
 }
